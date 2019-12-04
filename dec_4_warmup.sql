@@ -48,11 +48,56 @@ VALUES('1', 'this is great!', '2019-01-31 23:40:07'),('2', 'whoa, cool', '2018-0
 -- 	year)
 
 
-SELECT 
+-- SELECT 
+-- CASE 
+-- WHEN count(user_id) < 1
+-- THEN '0'
+-- ELSE count(user_id)
+-- END as comment_count
+-- ,user_id
+
+-- from
+-- user_comments
+
+
+-- where
+-- extract(month from created_at) = 1
+-- AND
+-- extract(year from created_at) = 2019
+
+-- group by 
+-- user_id
+
+-- order by
+-- user_id
+
+select 
 count(user_id)
 
 from
 user_comments
+
+group by 
+user_id
+
+order by
+user_id
+
+
+
+select 
+count(body)
+,name
+-- CASE 
+-- WHEN count(name) >= 1
+-- THEN count(name)
+-- ELSE 0
+-- END as comment_count
+
+from
+users as u
+left outer join user_comments as us
+on u.id = us.user_id
 
 where
 extract(month from created_at) = 1
@@ -60,7 +105,7 @@ AND
 extract(year from created_at) = 2019
 
 group by 
-user_id
+name
 
 order by
-user_id
+name
