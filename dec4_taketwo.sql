@@ -7,6 +7,7 @@
 
 -- Will need to join the users and user_comments tables to grab users and the amount of comments each user has made. Need a where clause for the month of January and the year 2019. It'd be something like:
 
+
 SELECT 
  u.name
  ,count(uc.user_id) as comment_count
@@ -24,7 +25,9 @@ AND
 GROUP BY 
  u.name
 
+
 -- This won't grab the users who didn't make any comments in January 2019. Using coalesce might help turn the nulls into 0s, hopefully so the count will show those users that made no comments.
+
 
 SELECT 
  u.name
@@ -78,3 +81,24 @@ ORDER BY
  user_count 
 
 -- Ideally, this query will group together the amount of users that made 0 comments, 1 comment, 2 comments, etc in January 2019. 
+
+-- Testing these queries on my database has not given me the desired results for 0s for the users who don't have comments in Jan. 2019. A left join might work better, but when combined with my WHERE clause, my 0s break.
+
+SELECT 
+ u.name
+ ,count(uc.id)
+
+FROM 
+ users as u 
+LEFT JOIN user_comments as uc 
+ on u.id = uc.user_id
+
+-- WHERE 
+--  EXTRACT(month from created_at) = 1
+-- AND 
+--  EXTRACT(year from created_at) = 2019
+--^ the users with 0 comments disappear with my where clause
+
+GROUP BY 
+ u.name
+
